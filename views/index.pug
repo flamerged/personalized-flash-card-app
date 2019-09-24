@@ -1,12 +1,6 @@
 extends layout.pug
 
 block content
-        sectiion#content
-            if name
-                h2 
-                    | Welcome fellow student 
-                    strong #{name}!
-                form(action="/goodbye", method="post")
-                    button(type="submit") Goodbye!
-            else 
-                h2 You are not logged in!
+        section#content
+            br
+            a(href=`/cards/`) Begin!
