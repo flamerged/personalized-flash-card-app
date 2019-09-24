@@ -8,7 +8,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/', (request, response) => {
-    response.render('index');
+    if (request.cookies.username) {
+        response.render('index', { name: request.cookies.username });
+    } else {
+        response.redirect('hello');
+    }
 });
 
 app.get('/cards', (request, response) => {
@@ -19,12 +23,33 @@ app.get('/cards', (request, response) => {
 });
 
 app.get('/hello', (req, res) => {
-    res.render('hello', { name: req.cookies.username });
+    if (req.cookies.username) {
+        res.redirect('/');
+    } else {
+        res.render('hello');
+    }
+});
+
+app.post('/goodbye', (req, res) => {
+    res.clearCookie('username');
+    res.redirect('hello');
 });
 
 app.post('/hello', (req, res) => {
     res.cookie('username', req.body.username);
-    res.render('hello', { name: req.body.username });
+    res.redirect('/');
+});
+
+app.use((req, res, next) => {
+    const err = new Error('not found');
+    err.status = 404;
+    next(err);
+});
+
+app.use((err, req, res, next) => {
+    res.locals.error = err;
+    res.status(err.status);
+    res.render('error', err);
 });
 
 app.listen(1337, () => {

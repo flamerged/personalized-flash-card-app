@@ -1,10 +1,6 @@
 extends layout.pug
 
 block content
-    if name
-        h2 Welcome fellow student 
-            strong #{name}!
-    else 
         form(action="/hello", method="post")
             label Please enter your name here: 
                 input(type="test", name="username")
