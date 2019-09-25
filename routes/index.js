@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', (request, response) => {
     if (request.cookies.username) {
-        response.render('index', { name: request.cookies.username });
+        response.render('layout', { name: request.cookies.username });
     } else {
         response.redirect('hello');
     }

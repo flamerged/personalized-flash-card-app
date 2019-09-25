@@ -2,13 +2,16 @@ doctype html
 html(lang="en")
     head
         title Flash Cards
+        link(rel="stylesheet", href="/static/stylesheets/style.css")
     body
         include includes/header.pug
         if name
-            h2 
-            | Welcome fellow student 
-            strong #{name}!
-            form(action="/goodbye", method="post")
-                button(type="submit") Goodbye!
+            section.namecard
+                .namecard-hello
+                    p.namecard-greeting Welcome, #{name}!
+                    form.namecard-exit(action='/goodbye' method='POST')
+                        button(type='submit')
+                            img(src='/static/img/close.svg')
+                h1.namecard-prompt Let&apos;s get started
+                a.namecard-submit(href='/cards/') Begin!
         block content
-        include includes/footer.pug

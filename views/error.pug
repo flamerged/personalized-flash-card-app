@@ -1,6 +1,13 @@
 extends layout
 
 block content
-    h1= error.message
-    h2= error.status
-    pre= error.stack
+    section.desk
+        h1 Not Found - Status: 404
+        img.desk-items(src='/static/img/desk.svg')
+        a.button-primary-small(href='/hello/') Go Home
+        .paper
+             pre.stack-trace.
+                #{error.stack}
+                      
+        .tear
+    

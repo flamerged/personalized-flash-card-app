@@ -13,26 +13,25 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
     const name = req.cookies.username;
     if (!name) {
-        res.redirect('/');
-    } else {
-        if (!side) {
-            res.redirect(`${id}?side=question`);
-        } else {
-            const text = cards[id][side];
-            const { hint } = cards[id];
-            const templateData = { text, id, name };
-
-            if (side === 'question') {
-                templateData.hint = hint;
-                templateData.sideToShowDisplay = 'Answer';
-                templateData.sideToShow = 'answer';
-            } else if (side === 'answer') {
-                templateData.sideToShowDisplay = 'Question';
-                templateData.sideToShow = 'question';
-            }
-            res.render('card', templateData);
-        }
+        return res.redirect('/');
     }
+    if (!side) {
+        return res.redirect(`${id}?side=question`);
+    }
+
+    const text = cards[id][side];
+    const { hint } = cards[id];
+    const templateData = { text, id, name, side };
+
+    if (side === 'question') {
+        templateData.hint = hint;
+        templateData.sideToShowDisplay = 'Answer';
+        templateData.sideToShow = 'answer';
+    } else if (side === 'answer') {
+        templateData.sideToShowDisplay = 'Question';
+        templateData.sideToShow = 'question';
+    }
+    res.render('card', templateData);
 });
 
 module.exports = router;
